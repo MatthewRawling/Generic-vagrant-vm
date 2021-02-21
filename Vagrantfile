@@ -29,6 +29,20 @@ Vagrant.configure("2") do |config|
   # Add Google Chrome
   config.vm.provision :shell, inline: "sudo apt install -y google-chrome-stable"
 
+  # Add xrdp
+  config.vm.provision :shell, inline: "sudo apt install -y xrdp"
+
+  # Add terraform
+  config.vm.provision :shell, inline: "curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -"
+  config.vm.provision :shell, inline: "sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main""
+  config.vm.provision :shell, inline: "sudo apt install -y terraform"
+
+  # Add VS Code
+  config.vm.provision :shell, inline: "sudo apt install -y software-properties-common apt-transport-https wget"
+  config.vm.provision :shell, inline: "wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -"
+  config.vm.provision :shell, inline: "sudo apt update -y"
+  config.vm.provision :shell, inline: "sudo apt install -y code"
+
   # Restart
   config.vm.provision :shell, inline: "sudo shutdown -r now"
 end
