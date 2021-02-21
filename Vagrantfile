@@ -23,6 +23,7 @@ Vagrant.configure("2") do |config|
   # Add desktop environment
   config.vm.provision :shell, inline: "sudo apt install -y --no-install-recommends ubuntu-desktop"
   config.vm.provision :shell, inline: "sudo apt install -y --no-install-recommends virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11"
+  
   # Add `vagrant` to Administrator
   config.vm.provision :shell, inline: "sudo usermod -a -G sudo vagrant"
 
@@ -33,12 +34,14 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, inline: "sudo apt install -y xrdp"
 
   # Add terraform
-  config.vm.provision :shell, inline: "curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -"
-  config.vm.provision :shell, inline: "sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main""
-  config.vm.provision :shell, inline: "sudo apt install -y terraform"
+  config.vm.provision :shell, inline: "sudo apt install -y wget"
+  config.vm.provision :shell, inline: "mkdir ~/bin"
+  config.vm.provision :shell, inline: "wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip"
+  config.vm.provision :shell, inline: "unzip terraform_0.12.24_linux_amd64.zip"
+  config.vm.provision :shell, inline: "mv terraform ~/bin"
 
   # Add VS Code
-  config.vm.provision :shell, inline: "sudo apt install -y software-properties-common apt-transport-https wget"
+  config.vm.provision :shell, inline: "sudo apt install -y software-properties-common apt-transport-https"
   config.vm.provision :shell, inline: "wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -"
   config.vm.provision :shell, inline: "sudo apt update -y"
   config.vm.provision :shell, inline: "sudo apt install -y code"
