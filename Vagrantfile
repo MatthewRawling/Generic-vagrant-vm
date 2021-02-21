@@ -1,5 +1,7 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
+  
+  config.vm.network "public_network"
 
   config.vm.provider :virtualbox do |v|
     v.gui = true
@@ -32,19 +34,18 @@ Vagrant.configure("2") do |config|
 
   # Add xrdp
   config.vm.provision :shell, inline: "sudo apt install -y xrdp"
+  config.vm.provision :shell, inline: "sudo rm -f -R /usr/share/polkit-1/actions/org.freedesktop.color.policy"
 
   # Add terraform
   config.vm.provision :shell, inline: "sudo apt install -y wget"
-  config.vm.provision :shell, inline: "mkdir ~/bin"
-  config.vm.provision :shell, inline: "wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip"
-  config.vm.provision :shell, inline: "unzip terraform_0.12.24_linux_amd64.zip"
-  config.vm.provision :shell, inline: "mv terraform ~/bin"
+  config.vm.provision :shell, inline: "rm -f -R terraform"
+  config.vm.provision :shell, inline: "wget https://releases.hashicorp.com/terraform/0.14.7/terraform_0.14.7_linux_amd64.zip"
+  config.vm.provision :shell, inline: "unzip terraform_0.14.7_linux_amd64.zip"
+  config.vm.provision :shell, inline: "sudo mv -f terraform /bin"
 
   # Add VS Code
-  config.vm.provision :shell, inline: "sudo apt install -y software-properties-common apt-transport-https"
-  config.vm.provision :shell, inline: "wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -"
-  config.vm.provision :shell, inline: "sudo apt update -y"
-  config.vm.provision :shell, inline: "sudo apt install -y code"
+  config.vm.provision :shell, inline: "sudo apt install -y snapd"
+  config.vm.provision :shell, inline: "sudo snap install code --classic"
 
   # Restart
   config.vm.provision :shell, inline: "sudo shutdown -r now"
