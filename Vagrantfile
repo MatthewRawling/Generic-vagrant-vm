@@ -29,16 +29,6 @@ Vagrant.configure("2") do |config|
   # Add Google Chrome
   config.vm.provision :shell, inline: "sudo apt install -y google-chrome-stable"
 
-  # Add Chromium
-  config.vm.provision :shell, inline: "sudo apt install -y chromium-browser"
-
-  # Add Firefox
-  config.vm.provision :shell, inline: "sudo apt install -y firefox"
-
-  # Add Japanese support
-  config.vm.provision :shell, inline: "sudo apt install -y fcitx-mozc"
-  config.vm.provision :shell, inline: "sudo apt install -y fonts-noto"
-
   # Restart
   config.vm.provision :shell, inline: "sudo shutdown -r now"
 end
