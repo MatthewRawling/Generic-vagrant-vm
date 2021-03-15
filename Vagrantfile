@@ -46,7 +46,14 @@ Vagrant.configure("2") do |config|
   # Add VS Code
   config.vm.provision :shell, inline: "sudo apt install -y snapd"
   config.vm.provision :shell, inline: "sudo snap install code --classic"
-
+  
+  # Add PGAdmin
+  config.vm.provision :shell, inline: "sudo curl https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo apt-key add"
+  config.vm.provision :shell, inline: "sudo sh -c 'echo \"deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main\" > /etc/apt/sources.list.d/pgadmin4.list && apt update'"
+  config.vm.provision :shell, inline: "sudo apt update -y"
+  config.vm.provision :shell, inline: "sudo apt install -y pgadmin4"
+  config.vm.provision :shell, inline: "git clone https://github.com/MatthewRawling/vagrant.git"
+  
   # Restart
   config.vm.provision :shell, inline: "sudo shutdown -r now"
 end
