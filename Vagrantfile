@@ -54,6 +54,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, inline: "sudo apt install -y pgadmin4"
   config.vm.provision :shell, inline: "git clone https://github.com/MatthewRawling/vagrant.git"
   
+  # Add MySQL Workbench
+  config.vm.provision :shell, inline: "sudo apt install -y mysql-workbench"
+  
   # Restart
   config.vm.provision :shell, inline: "sudo shutdown -r now"
 end
